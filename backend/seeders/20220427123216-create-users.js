@@ -1,14 +1,16 @@
 "use strict";
 
+const { faker } = require('@faker-js/faker');
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     const users = Array(5)
       .fill(null)
       .map((_, index) => ({
-        username: `exampleUser${index + 1}`,
-        email: `example${index + 1}@mail.com`,
-        password: `examplePwd${index + 1}`,
-        createdAt: new Date(),
+        username: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        createdAt: faker.date.past(),
         updatedAt: new Date(),
       }));
 
