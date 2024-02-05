@@ -31,13 +31,14 @@ function CommentList({ triggerUpdate, updateComments }) {
       return (
         <div className="card" key={id}>
           <div className="card-block">
-            <p className="card-text">{body}</p>
+            <p data-testid={"comment-content"} className="card-text">{body}</p>
           </div>
           <div className="card-footer">
             <CommentAuthor {...author} />
             <span className="date-posted">{dateFormatter(createdAt)}</span>
             {isAuth && loggedUser.username === username && (
               <button
+                data-testid={"delete-comment"}
                 className="btn btn-sm btn-outline-secondary pull-xs-right"
                 onClick={() => handleClick(id)}
               >

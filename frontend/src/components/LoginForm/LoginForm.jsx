@@ -28,6 +28,7 @@ function LoginForm({ onError }) {
   return (
     <form onSubmit={handleSubmit}>
       <FormFieldset
+        testid="email"
         type="email"
         name="email"
         required
@@ -38,6 +39,7 @@ function LoginForm({ onError }) {
       ></FormFieldset>
 
       <FormFieldset
+        testid="password"
         name="password"
         type="password"
         required
@@ -46,7 +48,7 @@ function LoginForm({ onError }) {
         handler={inputHandler}
         minLength="5"
       ></FormFieldset>
-      <button className="btn btn-lg btn-primary pull-xs-right">Login</button>
+      <button data-testid={"login-button"} className="btn btn-lg btn-primary pull-xs-right">Login</button>
     </form>
   );
 }

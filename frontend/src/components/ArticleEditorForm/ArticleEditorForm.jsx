@@ -61,6 +61,7 @@ function ArticleEditorForm() {
       <fieldset>
         {errorMessage && <span className="error-messages">{errorMessage}</span>}
         <FormFieldset
+          testid="title"
           placeholder="Article Title"
           name="title"
           required
@@ -69,6 +70,7 @@ function ArticleEditorForm() {
         ></FormFieldset>
 
         <FormFieldset
+          testid="description"
           normal
           placeholder="What's this article about?"
           name="description"
@@ -79,6 +81,7 @@ function ArticleEditorForm() {
 
         <fieldset className="form-group">
           <textarea
+            data-testid="body"
             className="form-control"
             rows="8"
             placeholder="Write your article (in markdown)"
@@ -90,6 +93,7 @@ function ArticleEditorForm() {
         </fieldset>
 
         <FormFieldset
+          testid="tags"
           normal
           placeholder="Enter tags"
           name="tags"
@@ -99,7 +103,7 @@ function ArticleEditorForm() {
           <div className="tag-list"></div>
         </FormFieldset>
 
-        <button className="btn btn-lg pull-xs-right btn-primary" type="submit">
+        <button data-testid="submit-button" className="btn btn-lg pull-xs-right btn-primary" type="submit">
           {slug ? "Update Article" : "Publish Article"}
         </button>
       </fieldset>

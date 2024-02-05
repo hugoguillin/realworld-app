@@ -33,14 +33,15 @@ function DropdownMenu() {
         onMouseLeave={handleClick}
       >
         <DropdownItem
+          testid="profile"
           icon="ion-person"
           text="Profile"
           url={`/profile/${username}`}
           state={loggedUser}
         />
-        <DropdownItem icon="ion-gear-a" text="Settings" url="/settings" />
+        <DropdownItem testid={"settings"} icon="ion-gear-a" text="Settings" url="/settings" />
         <div className="dropdown-divider"></div>
-        <DropdownItem icon="ion-log-out" text="Logout" handler={logout} />
+        <DropdownItem testid="logout" icon="ion-log-out" text="Logout" handler={logout} />
       </div>
     </li>
   );

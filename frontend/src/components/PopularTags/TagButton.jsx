@@ -8,7 +8,7 @@ function TagButton({ tagsList }) {
   };
 
   return tagsList.slice(0, 50).map((name) => (
-    <button className="tag-pill tag-default" key={name} onClick={handleClick}>
+    <button data-testid={"popular-tag"} className="tag-pill tag-default" key={name} onClick={handleClick}>
       {name}
     </button>
   ));

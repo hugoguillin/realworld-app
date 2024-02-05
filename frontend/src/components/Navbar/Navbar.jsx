@@ -17,19 +17,19 @@ function Navbar() {
         <SourceCodeLink left />
 
         <ul className="nav navbar-nav pull-xs-right">
-          <NavItem text="Home" icon="ion-compose" url="/" />
+          <NavItem testid={"home"} text="Home" icon="ion-compose" url="/" />
 
           {isAuth && (
             <>
-              <NavItem text="New Article" icon="ion-compose" url="/editor" />
+              <NavItem testid={"new-article"} text="New Article" icon="ion-compose" url="/editor" />
               <DropdownMenu />
             </>
           )}
 
           {!isAuth && (
             <>
-              <NavItem text="Login" icon="ion-log-in" url="/login" />
-              <NavItem text="Sign up" url="/register" />
+              <NavItem testid={"login-link"} text="Login" icon="ion-log-in" url="/login" />
+              <NavItem testid={"register-link"} text="Sign up" url="/register" />
             </>
           )}
         </ul>

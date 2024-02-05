@@ -33,12 +33,13 @@ function AuthorInfo() {
   return (
     <div className="col-xs-12 col-md-10 offset-md-1">
       <Avatar alt={username} className="user-img" src={image} />
-      <h4>{username}</h4>
+      <h4 data-testid={"author-username"}>{username}</h4>
 
       {bio && <Markdown options={{ forceBlock: true }}>{bio}</Markdown>}
 
       {username === loggedUser.username ? (
         <Link
+          data-testid={"edit-profile-settings"}
           className="btn btn-sm btn-outline-secondary action-btn"
           to="/settings"
         >

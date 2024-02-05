@@ -9,10 +9,12 @@ function FormFieldset({
   required,
   type,
   value,
+  testid,
 }) {
   return (
     <fieldset className="form-group">
       <input
+        data-testid={testid}
         autoFocus={autoFocus}
         className={`form-control ${normal ? "" : "form-control-lg"}`}
         minLength={minLength}

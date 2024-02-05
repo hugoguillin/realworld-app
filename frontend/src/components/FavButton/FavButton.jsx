@@ -23,12 +23,13 @@ function FavButton({ favorited, favoritesCount, handler, right, slug, text }) {
 
   return (
     <button
+      data-testid="fav-button"
       className={`btn btn-sm btn-outline-primary ${buttonPosition} ${buttonStyle}`}
       disabled={loading}
       onClick={handleClick}
     >
       <i className="ion-heart"></i> {buttonText}
-      <span className="counter"> ( {favoritesCount} )</span>
+      <span data-testid={"fav-counter"} className="counter"> ( {favoritesCount} )</span>
     </button>
   );
 }

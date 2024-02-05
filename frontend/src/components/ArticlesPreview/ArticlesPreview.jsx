@@ -32,8 +32,8 @@ function ArticlesPreview({ articles, loading, updateArticles }) {
             state={article}
             className="preview-link"
           >
-            <h1>{article.title}</h1>
-            <p>{article.description}</p>
+            <h1 data-testid={"article-title"}>{article.title}</h1>
+            <p data-testid={"article-body"}>{article.description}</p>
             <span>Read more...</span>
             <ArticleTags tagList={article.tagList} />
           </Link>

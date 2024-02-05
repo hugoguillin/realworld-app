@@ -32,6 +32,7 @@ function SignUpForm({ onError }) {
   return (
     <form onSubmit={handleSubmit}>
       <FormFieldset
+        testid={"username"}
         name="username"
         required
         placeholder="Your Name"
@@ -40,6 +41,7 @@ function SignUpForm({ onError }) {
       ></FormFieldset>
 
       <FormFieldset
+        testid={"email"}
         name="email"
         type="email"
         required
@@ -49,6 +51,7 @@ function SignUpForm({ onError }) {
       ></FormFieldset>
 
       <FormFieldset
+        testid={"password"}
         name="password"
         type="password"
         required

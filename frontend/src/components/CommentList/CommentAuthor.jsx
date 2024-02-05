@@ -12,6 +12,7 @@ function CommentAuthor({ bio, followersCount, following, image, username }) {
         <Avatar alt={username} className="comment-author-img" src={image} />
       </Link>{" "}
       <Link
+        data-testid="author-username"
         className="comment-author"
         state={{ bio, followersCount, following, image }}
         to={`/profile/${username}`}

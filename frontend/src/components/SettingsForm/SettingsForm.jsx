@@ -45,6 +45,7 @@ function SettingsForm() {
       <form onSubmit={formSubmit}>
         <fieldset>
           <FormFieldset
+            testid={"profile-image"}
             placeholder="URL of profile picture"
             name="image"
             value={image}
@@ -52,6 +53,7 @@ function SettingsForm() {
           ></FormFieldset>
 
           <FormFieldset
+            testid={"username"}
             placeholder="Your Name"
             name="username"
             required
@@ -61,6 +63,7 @@ function SettingsForm() {
 
           <fieldset className="form-group">
             <textarea
+              data-testid="bio"
               className="form-control form-control-lg"
               rows="8"
               placeholder="Short bio about you"
@@ -71,6 +74,7 @@ function SettingsForm() {
           </fieldset>
 
           <FormFieldset
+            testid={"email"}
             placeholder="Email"
             name="email"
             required
@@ -79,6 +83,7 @@ function SettingsForm() {
           ></FormFieldset>
 
           <FormFieldset
+            testid={"password"}
             type="password"
             name="password"
             value={password}
