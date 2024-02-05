@@ -1,0 +1,54 @@
+name: Run tests
+
+on:
+  workflow_dispatch:
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
+
+jobs:
+  test:
+    name: Spin up application to run tests
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: db_dev
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create PostgreSQL Database
+        run: npm run sqlz -- db:create
+
+      - name: Start aplication
+        run: npm run dev
+
+      - name: Wait for back and front to be available
+        run: |
+          wait-for-it -t 0 localhost:3000 -- echo "Frontend is ready" &&
+          wait-for-it -t 0 localhost:3001 -- echo "Backend is ready"
+
+      - name: Run Tests
+        run: npm test
