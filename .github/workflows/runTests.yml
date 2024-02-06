@@ -44,7 +44,7 @@ jobs:
     #  run: npm run sqlz -- db:create
 
     - name: Start aplication
-      run: npm run dev
+      run: npm run dev &
 
     - name: Wait for back and front to be available
       run: |
