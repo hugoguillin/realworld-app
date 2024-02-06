@@ -40,8 +40,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Create PostgreSQL Database
-      run: npm run sqlz -- db:create
+    # - name: Create PostgreSQL Database
+    #  run: npm run sqlz -- db:create
 
     - name: Start aplication
       run: npm run dev
