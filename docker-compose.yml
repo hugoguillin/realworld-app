@@ -37,7 +37,6 @@
         DEV_DB_NAME: db_dev
         DEV_DB_HOSTNAME: postgresql
         DEV_DB_DIALECT: postgres
-        DEV_DB_LOGGGIN: true
 
   volumes:
     postgres-data:
