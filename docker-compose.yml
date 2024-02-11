@@ -5,8 +5,8 @@
     postgresql:
       image: postgres:latest
       restart: always
+      user: postgres
       environment:
-        POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
       ports:
         - "5432:5432"
@@ -17,8 +17,6 @@
         interval: 3s
         timeout: 5s
         retries: 5
-      networks:
-        - realworld-network
 
     app:
       build:
@@ -26,24 +24,20 @@
         dockerfile: Dockerfile
       container_name: realworld-app
       ports:
-        - "8080:3000"
+        - "3000:3000"
         - "3001:3001"
       depends_on:
         postgresql:
           condition: service_healthy
       environment:
+        PORT: 3001
+        JWT_KEY: supersecretkey
         DEV_DB_USERNAME: postgres
         DEV_DB_PASSWORD: postgres
         DEV_DB_NAME: db_dev
         DEV_DB_HOSTNAME: postgresql
         DEV_DB_DIALECT: postgres
         DEV_DB_LOGGGIN: true
-      networks:
-        - realworld-network
 
   volumes:
     postgres-data:
-
-  networks:
-    realworld-network:
-      driver: bridge
