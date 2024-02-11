@@ -12,6 +12,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    # Paso 2: Dar permiso de ejecución al archivo entrypoint.sh
+    - name: Dar permiso de ejecución al archivo entrypoint.sh
+      run: chmod +x entrypoint.sh
+
     # Paso 2: Iniciar contenedores con Docker Compose
     - name: Iniciar contenedores
       run: docker-compose up -d
