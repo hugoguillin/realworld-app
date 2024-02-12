@@ -18,15 +18,17 @@ jobs:
 
     # Paso 2: Iniciar contenedores con Docker Compose
     - name: Iniciar contenedores
-      run: docker-compose up -d
+      run: |
+        docker-compose up -d
+        docker-compose exec -d app npm run sqlz -- db:seed:all
 
-    # Paso 3: Esperar a que los contenedores estén listos
-    - name: Esperar a que los contenedores estén listos
-      run: docker-compose run -d app dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
-
-    # Paso 4: Ejecutar el script de sembrado de datos
-    - name: Ejecutar script de sembrado
-      run: docker-compose run -d app npm run sqlz -- db:seed:all
+#    # Paso 3: Esperar a que los contenedores estén listos
+#    - name: Esperar a que los contenedores estén listos
+#      run: docker-compose run -d app dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
+#
+#    # Paso 4: Ejecutar el script de sembrado de datos
+#    - name: Ejecutar script de sembrado
+#      run: docker-compose run -d app npm run sqlz -- db:seed:all
 
     - name: Run Tests
       run: npm test
