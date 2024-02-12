@@ -22,7 +22,7 @@ jobs:
 
     # Paso 3: Esperar a que los contenedores estén listos
     - name: Esperar a que los contenedores estén listos
-      run: dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
+      run: docker-compose run -d dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
 
     # Paso 4: Ejecutar el script de sembrado de datos
     - name: Ejecutar script de sembrado
