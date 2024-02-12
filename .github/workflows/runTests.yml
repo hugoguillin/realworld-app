@@ -26,7 +26,7 @@ jobs:
 
     # Paso 4: Ejecutar el script de sembrado de datos
     - name: Ejecutar script de sembrado
-      run: docker-compose run -d dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
+      run: docker-compose run -d app npm run sqlz -- db:seed:all
 
     - name: Run Tests
       run: npm test
