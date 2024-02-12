@@ -20,6 +20,7 @@ jobs:
     - name: Iniciar contenedores
       run: |
         docker-compose up -d
+        docker-compose exec -d app dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
         docker-compose exec -d app npm run sqlz -- db:seed:all
 
 #    # Paso 3: Esperar a que los contenedores estén listos
