@@ -28,7 +28,7 @@ jobs:
 #
 #    # Paso 4: Ejecutar el script de sembrado de datos
     - name: Ejecutar script de sembrado
-      run: docker-compose run -d app npm run sqlz -- db:seed:all
+      run: docker-compose exec app npm run sqlz -- db:seed:all
 
     - name: Run Tests
-      run: docker-compose exec -d app npm test
+      run: docker-compose exec app npm test
