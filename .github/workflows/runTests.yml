@@ -31,4 +31,4 @@ jobs:
       run: docker-compose exec -T app npm run sqlz -- db:seed:all
 
     - name: Run Tests
-      run: docker-compose exec app npm test
+      run: docker-compose exec -T app npm test
