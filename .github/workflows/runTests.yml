@@ -18,18 +18,17 @@ jobs:
 
     # Paso 2: Iniciar contenedores con Docker Compose
     - name: Iniciar contenedores
-      run: |
-        docker-compose up -d
-        docker-compose exec -d app dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
-        docker-compose exec -d app npm run sqlz -- db:seed:all
+      run: docker-compose up -d
 
 #    # Paso 3: Esperar a que los contenedores estén listos
-#    - name: Esperar a que los contenedores estén listos
-#      run: docker-compose run -d app dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
+    - name: Esperar a que los contenedores estén listos
+      run: |
+        wget -O dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/v0.7.0/dockerize-alpine-linux-amd64-v0.7.0.tar.gz && tar -C /usr/local/bin -xzvf dockerize.tar.gz && rm dockerize.tar.gz
+        dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
 #
 #    # Paso 4: Ejecutar el script de sembrado de datos
-#    - name: Ejecutar script de sembrado
-#      run: docker-compose run -d app npm run sqlz -- db:seed:all
+    - name: Ejecutar script de sembrado
+      run: docker-compose run -d app npm run sqlz -- db:seed:all
 
     - name: Run Tests
-      run: npm test
+      run: docker-compose exec -d app npm test
