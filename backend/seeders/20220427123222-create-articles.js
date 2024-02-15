@@ -9,15 +9,20 @@ module.exports = {
 
     const articles = Array(55)
       .fill(null)
-      .map((_, index) => ({
-        slug: faker.lorem.slug({min: 3, max: 5}),
-        title: faker.lorem.sentence({min: 7, max: 10}),
-        description: faker.lorem.sentence({min: 10, max: 15}),
-        body: faker.lorem.paragraphs({min: 4, max: 6}),
-        userId: users[Math.floor(Math.random() * users.length)].id,
-        createdAt: faker.date.anytime(),
-        updatedAt: faker.date.recent({days: 7}),
-      }));
+      .map((_, index) => {
+        const title = faker.lorem.sentence({min: 7, max: 10});
+        const slug = faker.helpers.slugify(title);
+        return {
+          slug: slug,
+          title: title,
+          description: faker.lorem.sentence({min: 10, max: 15}),
+          body: faker.lorem.paragraphs({min: 4, max: 6}),
+          userId: users[Math.floor(Math.random() * users.length)].id,
+          createdAt: faker.date.anytime(),
+          updatedAt: faker.date.recent({days: 7}),
+        }
+
+      });
 
     await queryInterface.bulkInsert("Articles", articles, {});
   },
