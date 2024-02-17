@@ -3,6 +3,7 @@ import FavoritesApi from '../api-utils/favorites-api'
 import ArticleDetailPage from '../page-objects/article-detail-page'
 import AuthorApi from '../api-utils/author-api'
 import FollowAuthorButton from '../components/follow-author-button'
+import { faker } from '@faker-js/faker';
 
 const articleIndex = 0
 // let loginData
@@ -15,16 +16,12 @@ describe('Checking article detail page', () => {
   beforeEach(() => {
     cy.loginWithSession(Cypress.env('email'), Cypress.env('password'))
     ArticleDetailPage.visit()
-    // cy.fixture('loginData').then(d => {
-    //   loginData = d.user.username
-    // })
   })
   it.only('Give a like to an article', () => {
     cy.intercept('POST', '**/articles/**/favorite').as('postFavorite')
     GlobalFeedPage.getAmountOfLikes().then(amount => {
       cy.giveLikeToAnArticle()
       cy.wait('@postFavorite').its('response.statusCode').should('eq', 200)
-      cy.wait(500)
       GlobalFeedPage.getAmountOfLikes().then(newAmount => {
         expect(newAmount).to.eq(amount + 1)
       })
@@ -32,23 +29,20 @@ describe('Checking article detail page', () => {
   })
 
   it('Leave a comment and the delete it', () => {
-    const message = 'Some random message'
+    const message = faker.lorem.sentence()
     ArticleDetailPage.sendComment(message)
-    ArticleDetailPage.getCommentCard()
-      .find('p')
+    ArticleDetailPage.getCommentText()
       .invoke('text')
       .then(text => {
         expect(text.trim()).to.equal(message)
       })
-    ArticleDetailPage.getCommentCard()
-      .find('a')
-      .eq(1)
+    ArticleDetailPage.getCommentAuthor()
       .invoke('text')
       .then(text => {
         expect(text.trim()).to.equal(Cypress.env("username"))
       })
     ArticleDetailPage.deleteComment()
-    ArticleDetailPage.getCommentCard().should('not.exist')
+    cy.contains(message).should('not.exist')
   })
   it('Start following an author', function () {
     FollowAuthorButton.getFollowAuthorButton().as('followButton').click()

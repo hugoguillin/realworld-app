@@ -1,7 +1,8 @@
-const FOLLOW_BUTTON = 'app-follow-button button'
+// data-testId attributes
+const FOLLOW_BUTTON = 'follow-button'
 
 export default class FollowAuthorButton {
   static getFollowAuthorButton() {
-    return cy.get(FOLLOW_BUTTON).first()
+    return cy.getByTestId(FOLLOW_BUTTON).first()
   }
 }

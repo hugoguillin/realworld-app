@@ -39,7 +39,7 @@ export default class FavoritesApi {
             method: 'DELETE',
             url: `${url}/articles/${slug}/favorite`,
             headers: {
-              Authorization: 'Token ' + localStorage.getItem('jwtToken')
+              Authorization: 'Token ' + Cypress.env('token')
             }
           })
         }

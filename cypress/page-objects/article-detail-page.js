@@ -1,9 +1,14 @@
 import ArticlesApi from '../api-utils/article-api'
 
-const COMMENT_TEXTAREA = 'textarea'
-const POST_COMMENT_BUTTON = 'form button'
-const COMMENT_CARD = 'app-article-comment'
-const TAG_PILLS = '.tag-list li'
+// data-testId attributes
+const COMMENT_TEXTAREA = 'comment-textarea'
+const POST_COMMENT_BUTTON = 'post-comment'
+const COMMENT_TEXT = 'comment-content'
+const COMMENT_AUTHOR = 'author-username'
+const DELETE_COMMENT_BUTTON = 'delete-comment'
+const TAG_PILLS = 'article-tag'
+const EDIT_ARTICLE = 'edit-article'
+const DELETE_ARTICLE = 'delete-article'
 
 export default class ArticleDetailPage {
   static visit(articleIndex = 0) {
@@ -17,19 +22,23 @@ export default class ArticleDetailPage {
       })
   }
   static sendComment(comment) {
-    cy.get(COMMENT_TEXTAREA).type(comment)
-    cy.get(POST_COMMENT_BUTTON).click()
+    cy.getByTestId(COMMENT_TEXTAREA).type(comment)
+    cy.getByTestId(POST_COMMENT_BUTTON).click()
   }
-  static getCommentCard() {
-    return cy.get(COMMENT_CARD)
+  static getCommentText() {
+    return cy.getByTestId(COMMENT_TEXT)
+  }
+
+  static getCommentAuthor() {
+    return cy.getByTestId(COMMENT_AUTHOR)
   }
 
   static deleteComment() {
-    this.getCommentCard().find('i').click()
+    cy.getByTestId(DELETE_COMMENT_BUTTON).click()
   }
 
   static getArticleTags() {
-    return cy.get(TAG_PILLS).then(tagList => {
+    return cy.getByTestId(TAG_PILLS).then(tagList => {
       return tagList.map((_t, e) => e.textContent.trim()).get()
     })
   }
@@ -39,7 +48,11 @@ export default class ArticleDetailPage {
   }
 
   static goToEditArticle() {
-    cy.contains('Edit Article').click()
+    cy.getByTestId(EDIT_ARTICLE).click()
     cy.url().should('include', 'editor')
+  }
+
+  static deleteArticle() {
+    cy.getByTestId(DELETE_ARTICLE).click()
   }
 }
