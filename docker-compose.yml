@@ -40,3 +40,4 @@
 
   volumes:
     postgres-data:
+      driver: local

@@ -10,8 +10,8 @@ module.exports = defineConfig({
   },
   env: {
     apiUrl: "http://localhost:3001/api",
-    email: "safdsad@dasfd.com",
-    password: "safdsad@dasfd.com",
+    email: "cypress@realworld.com",
+    password: "cypress@realworld.com",
     username: "cypress-user",
   },
 });

@@ -34,7 +34,7 @@ export default class ArticleDetailPage {
   }
 
   static deleteComment() {
-    cy.getByTestId(DELETE_COMMENT_BUTTON).click()
+    cy.getByTestId(DELETE_COMMENT_BUTTON).last().click()
   }
 
   static getArticleTags() {

@@ -35,7 +35,7 @@ Cypress.Commands.add('loginViaUI', (email, password) => {
 
 Cypress.Commands.add('loginWithSession', (email, password) => {
   cy.session([email, password], () => {
-    cy.loginViaApi(email, password).then(response => {
+    cy.setJwtTokenAsEnv(email, password).then(response => {
       const userSession = {
         headers: {
           Authorization: `Token ${response.body.user.token}`
@@ -47,7 +47,13 @@ Cypress.Commands.add('loginWithSession', (email, password) => {
     })
   })
 })
-Cypress.Commands.add('loginViaApi', (email, password) => {
+
+/**
+ * Sets the token for api auth as the env variable **token**
+ * @param {string} email
+ * @param {string} password
+ */
+Cypress.Commands.add('setJwtTokenAsEnv', (email, password) => {
   cy.request({
     method: 'POST',
     url: `${apiUrl}/users/login`,
