@@ -1,6 +1,6 @@
 import { useFeedContext } from "../../context/FeedContext";
 
-function FeedNavLink({ icon, name, text }) {
+function FeedNavLink({ testid, icon, name, text }) {
   const { tabName, changeTab } = useFeedContext();
 
   const handleClick = (e) => {
@@ -10,6 +10,7 @@ function FeedNavLink({ icon, name, text }) {
   return (
     <li className="nav-item">
       <button
+        data-testid={testid}
         className={`nav-link ${tabName === name ? "active" : ""}`}
         onClick={handleClick}
       >
