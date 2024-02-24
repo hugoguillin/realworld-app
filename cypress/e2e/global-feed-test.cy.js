@@ -11,7 +11,7 @@ describe('Testing global feed', () => {
     GlobalFeed.visit()
   })
   it('Check if all expected articles are displayed', () => {
-
+    GlobalFeed.goToGlobalFeed()
     Articles.getArticles().then(response => {
       const titlesBack = response.map(article => article.title)
       GlobalFeed.getArticlesTitles().then(titles => {
@@ -30,6 +30,7 @@ describe('Like articles', () => {
     GlobalFeed.visit()
   })
   it('Give like to an article', () => {
+    GlobalFeed.goToGlobalFeed()
     cy.intercept('POST', '**/articles/**/favorite').as('postFavorite')
     GlobalFeed.getAmountOfLikes().then(amount => {
       cy.giveLikeToAnArticle()

@@ -14,9 +14,6 @@ export default class GlobalFeedPage {
   static getArticlesTitles() {
     return cy.getByTestId(ARTICLE_TITLE).map('textContent')
   }
-  static likeArticle() {
-    cy.getByTestId(FAV_BUTTON).eq(0).click()
-  }
 
   static getAmountOfLikes(articleIndex = 0) {
     return cy
