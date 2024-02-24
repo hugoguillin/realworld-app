@@ -7,6 +7,10 @@ export default class GlobalFeedPage {
     cy.visit('/')
   }
 
+  static goToGlobalFeed() {
+    cy.getByTestId('global-feed').click()
+  }
+
   static getArticlesTitles() {
     return cy.getByTestId(ARTICLE_TITLE).map('textContent')
   }
