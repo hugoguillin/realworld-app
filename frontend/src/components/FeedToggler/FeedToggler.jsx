@@ -9,9 +9,9 @@ function FeedToggler() {
   return (
     <div className="feed-toggle">
       <ul className="nav nav-pills outline-active">
-        {isAuth && <FeedNavLink name="feed" text="Your Feed" />}
+        {isAuth && <FeedNavLink testid="your-feed" name="feed" text="Your Feed" />}
 
-        <FeedNavLink name="global" text="Global Feed" />
+        <FeedNavLink testid="global-feed" name="global" text="Global Feed" />
 
         {tabName === "tag" && <FeedNavLink icon name="tag" text={tagName} />}
       </ul>
