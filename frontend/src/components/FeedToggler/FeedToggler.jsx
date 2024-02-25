@@ -13,7 +13,7 @@ function FeedToggler() {
 
         <FeedNavLink testid="global-feed" name="global" text="Global Feed" />
 
-        {tabName === "tag" && <FeedNavLink icon name="tag" text={tagName} />}
+        {tabName === "tag" && <FeedNavLink testid="tag-feed" icon name="tag" text={tagName} />}
       </ul>
     </div>
   );
