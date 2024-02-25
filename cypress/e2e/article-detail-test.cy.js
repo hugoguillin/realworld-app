@@ -5,6 +5,8 @@ import AuthorApi from '../api-utils/author-api'
 import FollowAuthorButton from '../components/follow-author-button'
 import { faker } from '@faker-js/faker';
 import Comment from '../api-utils/comments-api';
+import ArticlesApi from "../api-utils/article-api";
+import Utils from "../utils/utils";
 
 const articleIndex = 0
 describe('Checking article detail page', () => {
@@ -32,6 +34,18 @@ describe('Checking article detail page', () => {
     })
   })
 
+  context('Test follow feature', () => {
+    before(() => {
+      AuthorApi.unfollowAuthor(articleIndex)
+    })
+    it('Start following an author', function () {
+      FollowAuthorButton.getFollowAuthorButton().as('followButton').click()
+      cy.get('@followButton').should('contain.text', 'Unfollow')
+      cy.get('@followButton').click()
+      cy.get('@followButton').should('contain.text', 'Follow')
+    })
+  })
+
   context('Test add comment feature', () => {
     before(() => {
       Comment.deleteArticleComments(articleIndex)
@@ -52,27 +66,36 @@ describe('Checking article detail page', () => {
     })
   })
 
-  context('Test delete article feature', () => {
+  context('Test delete comment feature', () => {
     const message = faker.lorem.sentence()
     before(() => {
       Comment.addCommentToArticle(articleIndex, message)
     })
-    it('Delete an article', () => {
+    it('Delete a comment of an article', () => {
       cy.contains(message).should('exist')
       ArticleDetailPage.deleteComment()
       cy.contains(message).should('not.exist')
     })
   })
 
-  context('Test follow feature', () => {
+  context('Test delete article feature', () => {
+    let newArticle
     before(() => {
-      AuthorApi.unfollowAuthor(articleIndex)
+      Utils.generateNewArticleFixture()
+      cy.fixture('articleData').then((data) => {
+        newArticle = data
+      })
     })
-    it('Start following an author', function () {
-      FollowAuthorButton.getFollowAuthorButton().as('followButton').click()
-      cy.get('@followButton').should('contain.text', 'Unfollow')
-      cy.get('@followButton').click()
-      cy.get('@followButton').should('contain.text', 'Follow')
+    it.only('deletes an existing article', () => {
+      ArticlesApi.createNewArticle(newArticle).then(slug => {
+        cy.visit(`/article/${slug}`)
+      })
+      ArticleDetailPage.deleteArticle()
+      cy.url().should('equal', Cypress.config().baseUrl + '/')
+      GlobalFeedPage.goToGlobalFeed()
+      GlobalFeedPage.getArticlesTitles().then(titles => {
+        expect(titles).to.not.include(newArticle.article.title)
+      })
     })
   })
 })

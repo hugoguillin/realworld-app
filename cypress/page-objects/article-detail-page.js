@@ -48,11 +48,11 @@ export default class ArticleDetailPage {
   }
 
   static goToEditArticle() {
-    cy.getByTestId(EDIT_ARTICLE).click()
+    cy.getByTestId(EDIT_ARTICLE).first().click()
     cy.url().should('include', 'editor')
   }
 
   static deleteArticle() {
-    cy.getByTestId(DELETE_ARTICLE).click()
+    cy.getByTestId(DELETE_ARTICLE).first().click()
   }
 }

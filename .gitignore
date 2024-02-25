@@ -44,3 +44,4 @@ yarn-error.log*
 
 #Cypress
 cypress.downloads
+cypress/fixtures/articleData.json
