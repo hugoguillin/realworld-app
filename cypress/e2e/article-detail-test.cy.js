@@ -79,14 +79,8 @@ describe('Checking article detail page', () => {
   })
 
   context('Test delete article feature', () => {
-    let newArticle
-    before(() => {
-      Utils.generateNewArticleFixture()
-      cy.fixture('articleData').then((data) => {
-        newArticle = data
-      })
-    })
-    it.only('deletes an existing article', () => {
+    it('deletes an existing article', () => {
+      let newArticle = Utils.generateNewArticleFixture(false)
       ArticlesApi.createNewArticle(newArticle).then(slug => {
         cy.visit(`/article/${slug}`)
       })

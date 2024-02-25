@@ -2,7 +2,6 @@ import NewArticlePage from '../page-objects/new-article-page'
 import ArticleDetailPage from '../page-objects/article-detail-page'
 import ArticlesApi from '../api-utils/article-api'
 import Utils from '../utils/utils'
-import GlobalFeedPage from '../page-objects/global-feed-page'
 
 describe('Check CRUD actions on articles', () => {
   let newArticle
@@ -10,11 +9,7 @@ describe('Check CRUD actions on articles', () => {
     cy.setJwtTokenAsEnv(Cypress.env('email'), Cypress.env('password'))
   })
   beforeEach(() => {
-    ArticlesApi.deleteAuthorArticles(Cypress.env("username"))
-    Utils.generateNewArticleFixture()
-    cy.fixture('articleData').then((data) => {
-      newArticle = data
-    })
+    newArticle = Utils.generateNewArticleFixture()
     cy.loginWithSession(Cypress.env('email'), Cypress.env('password'))
     NewArticlePage.visit()
   })
@@ -36,7 +31,8 @@ describe('Check CRUD actions on articles', () => {
     const editedData = {
       title: ' edited title',
       description: 'Edited description',
-      body: 'Edited body'
+      body: 'Edited body',
+      tagList: []
     }
     ArticlesApi.createNewArticle(newArticle).then(slug => {
       cy.visit(`/article/${slug}`)
@@ -46,7 +42,6 @@ describe('Check CRUD actions on articles', () => {
 
     cy.url().should('include', editedData.title.replace(/\s/g, '-'))
     ArticleDetailPage.getArticleBody().should('contain.text', editedData.body)
-    // cy.get('.tag-list li').should('not.exist')
   })
 
 })
