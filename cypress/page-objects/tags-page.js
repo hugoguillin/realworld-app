@@ -24,7 +24,7 @@ export default class TagsPage {
 	}
 
 	static getTagTab() {
-		return cy.get(TAG_TAB).parent()
+		return cy.getByTestId(TAG_TAB)
 	}
 
 }
