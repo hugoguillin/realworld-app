@@ -23,7 +23,7 @@ function DropdownMenu() {
         className="nav-link dropdown-toggle cursor-pointer"
         onClick={handleClick}
       >
-        <Avatar alt={username} className="user-pic" src={image} />
+        <Avatar testid={"user-pic"} alt={username} className="user-pic" src={image} />
         {username}
       </div>
 
