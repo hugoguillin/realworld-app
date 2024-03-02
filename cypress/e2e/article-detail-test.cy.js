@@ -39,10 +39,16 @@ describe('Checking article detail page', () => {
       AuthorApi.unfollowAuthor(articleIndex)
     })
     it('Start following an author', function () {
-      FollowAuthorButton.getFollowAuthorButton().as('followButton').click()
-      cy.get('@followButton').should('contain.text', 'Unfollow')
-      cy.get('@followButton').click()
-      cy.get('@followButton').should('contain.text', 'Follow')
+      // FollowAuthorButton.getFollowAuthorButton().as('followButton').click()
+      // cy.get('@followButton').should('contain.text', 'Unfollow')
+      // cy.get('@followButton').click()
+      // cy.get('@followButton').should('contain.text', 'Follow')
+      FollowAuthorButton.getFollowAuthorButton().then($button => {
+        cy.wrap($button).click()
+        expect($button, 'Follow button').to.contain.text('Unfollow')
+        cy.wrap($button).click()
+        expect($button, 'Unfollow button').to.contain.text('Follow')
+      })
     })
   })
 
@@ -80,7 +86,7 @@ describe('Checking article detail page', () => {
 
   context('Test delete article feature', () => {
     it('deletes an existing article', () => {
-      let newArticle = Utils.generateNewArticleFixture(false)
+      let newArticle = Utils.generateNewArticleData(false)
       ArticlesApi.createNewArticle(newArticle).then(slug => {
         cy.visit(`/article/${slug}`)
       })

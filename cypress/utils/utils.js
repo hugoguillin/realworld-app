@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 
 export default class Utils {
-  static generateNewArticleFixture(includeTags = true) {
+  static generateNewArticleData(includeTags = true) {
     let tagList = []
     if (includeTags) {
       tagList = [faker.lorem.word(), faker.lorem.word()]
@@ -12,6 +12,18 @@ export default class Utils {
         description: `${faker.lorem.sentence(8)}`,
         body: `${faker.lorem.paragraphs(2)}`,
         tagList: tagList
+      }
+    }
+  }
+
+  static generateUserSettingsData() {
+    return {
+      user: {
+        image: faker.image.avatar(),
+        username: faker.internet.userName(),
+        bio: faker.lorem.sentence(),
+        email: faker.internet.email(),
+        password: faker.internet.password()
       }
     }
   }

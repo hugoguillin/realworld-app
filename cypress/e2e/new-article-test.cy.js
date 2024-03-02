@@ -9,7 +9,7 @@ describe('Check CRUD actions on articles', () => {
     cy.setJwtTokenAsEnv(Cypress.env('email'), Cypress.env('password'))
   })
   beforeEach(() => {
-    newArticle = Utils.generateNewArticleFixture()
+    newArticle = Utils.generateNewArticleData()
     cy.loginWithSession(Cypress.env('email'), Cypress.env('password'))
     NewArticlePage.visit()
   })
