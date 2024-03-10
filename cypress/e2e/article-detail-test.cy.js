@@ -23,7 +23,8 @@ describe('Checking article detail page', () => {
       FavoritesApi.unfavoriteArticle()
     })
 
-    it('Give a like to an article', () => {cy.intercept('POST', '**/articles/**/favorite').as('postFavorite')
+    it('Give a like to an article', () => {
+      cy.intercept('POST', '**/articles/*/favorite').as('postFavorite')
       GlobalFeedPage.getAmountOfLikes().then(amount => {
         cy.giveLikeToAnArticle()
         cy.wait('@postFavorite').its('response.statusCode').should('eq', 200)
@@ -39,16 +40,11 @@ describe('Checking article detail page', () => {
       AuthorApi.unfollowAuthor(articleIndex)
     })
     it('Start following an author', function () {
-      // FollowAuthorButton.getFollowAuthorButton().as('followButton').click()
-      // cy.get('@followButton').should('contain.text', 'Unfollow')
-      // cy.get('@followButton').click()
-      // cy.get('@followButton').should('contain.text', 'Follow')
-      FollowAuthorButton.getFollowAuthorButton().then($button => {
-        cy.wrap($button).click()
-        expect($button, 'Follow button').to.contain.text('Unfollow')
-        cy.wrap($button).click()
-        expect($button, 'Unfollow button').to.contain.text('Follow')
-      })
+      cy.wait(500)
+      FollowAuthorButton.getFollowAuthorButton().as('followButton').click()
+      cy.get('@followButton').should('contain.text', 'Unfollow')
+      cy.get('@followButton').click()
+      cy.get('@followButton').should('contain.text', 'Follow')
     })
   })
 
@@ -79,7 +75,7 @@ describe('Checking article detail page', () => {
     })
     it('Delete a comment of an article', () => {
       cy.contains(message).should('exist')
-      ArticleDetailPage.deleteComment()
+      ArticleDetailPage.deleteComment(message)
       cy.contains(message).should('not.exist')
     })
   })
@@ -87,6 +83,7 @@ describe('Checking article detail page', () => {
   context('Test delete article feature', () => {
     it('deletes an existing article', () => {
       let newArticle = Utils.generateNewArticleData(false)
+      cy.wait(500)
       ArticlesApi.createNewArticle(newArticle).then(slug => {
         cy.visit(`/article/${slug}`)
       })

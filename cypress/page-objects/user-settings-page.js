@@ -18,8 +18,12 @@ export default class UserSettingsPage {
     return cy.getByTestId('user-pic')
   }
 
+  static getField(fieldName) {
+    return cy.getByTestId(fieldName)
+  }
+
   static updateField(fieldName, fieldValue) {
-    cy.getByTestId(fieldName).clear().type(fieldValue)
+    this.getField(fieldName).clear().type(fieldValue)
     this.submitForm()
   }
 

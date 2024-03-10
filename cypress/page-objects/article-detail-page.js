@@ -33,8 +33,12 @@ export default class ArticleDetailPage {
     return cy.getByTestId(COMMENT_AUTHOR)
   }
 
-  static deleteComment() {
-    cy.getByTestId(DELETE_COMMENT_BUTTON).last().click()
+  static deleteComment(commentText) {
+    // I'm not proud of this, but it's the only way I found to get just the card that contains the comment
+    // when there are multiple comments on the page.
+    cy.contains(commentText.toString()).parent().parent().within(() => {
+      cy.getByTestId(DELETE_COMMENT_BUTTON).click()
+    })
   }
 
   static getArticleTags() {

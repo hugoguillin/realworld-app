@@ -19,12 +19,21 @@ export default class Utils {
   static generateUserSettingsData() {
     return {
       user: {
-        image: faker.image.avatar(),
+        image: faker.internet.url(),
         username: faker.internet.userName(),
         bio: faker.lorem.sentence(),
         email: faker.internet.email(),
         password: faker.internet.password()
       }
+    }
+  }
+
+  static generateNewUserData() {
+    return {
+      username: faker.internet.userName(),
+      email: faker.internet.email(),
+      password: faker.internet.password()
+
     }
   }
 }

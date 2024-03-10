@@ -36,12 +36,14 @@ Cypress.Commands.add('loginViaUI', (email, password) => {
 Cypress.Commands.add('loginWithSession', (email, password) => {
   cy.session([email, password], () => {
     cy.setJwtTokenAsEnv(email, password).then(response => {
+      const { user } = response.body
+      console.log('user', user)
       const userSession = {
         headers: {
           Authorization: `Token ${response.body.user.token}`
         },
         isAuth: true,
-        loggedUser: JSON.stringify(response.body.user)
+        loggedUser: user
       }
       localStorage.setItem('loggedUser', JSON.stringify(userSession))
     })
