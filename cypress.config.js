@@ -6,7 +6,8 @@ module.exports = defineConfig({
     watchForFileChanges: false,
     experimentalRunAllSpecs: true,
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      require("@cypress/grep/src/plugin")(config);
+      return config;
     },
   },
   env: {
@@ -14,5 +15,7 @@ module.exports = defineConfig({
     email: "cypress@realworld.com",
     password: "cypress@realworld.com",
     username: "cypress-user",
+    grepFilterSpecs: true,
+    grepOmitFiltered: true,
   },
 });

@@ -24,6 +24,7 @@
     "cy:run": "cypress run"
   },
   "devDependencies": {
+    "@cypress/grep": "^4.0.1",
     "@faker-js/faker": "^8.4.1",
     "@vitejs/plugin-react-swc": "^3.2.0",
     "concurrently": "^7.6.0",
