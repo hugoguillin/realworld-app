@@ -20,15 +20,18 @@ jobs:
       - name: Iniciar contenedores
         run: docker-compose up -d
 
-      #    # Paso 3: Esperar a que los contenedores estén listos
+      # Paso 3: Esperar a que los contenedores estén listos
       - name: Esperar a que los contenedores estén listos
         run: |
           wget -O dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/v0.7.0/dockerize-alpine-linux-amd64-v0.7.0.tar.gz && tar -C /usr/local/bin -xzvf dockerize.tar.gz && rm dockerize.tar.gz
           dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
-      #
-      #    # Paso 4: Ejecutar el script de sembrado de datos
+
+      # Paso 4: Ejecutar el script de sembrado de datos
       - name: Ejecutar script de sembrado
         run: docker-compose exec -T app npm run sqlz -- db:seed:all
 
-  run-cypress-tests:
-    uses: bahmutov/cypress-workflows/.github/workflows/standard.yml@v1
+      - name: Run Cypress tests
+        run: npm run cypress:run
+
+  # run-cypress-tests:
+  #   uses: bahmutov/cypress-workflows/.github/workflows/standard.yml@v1
