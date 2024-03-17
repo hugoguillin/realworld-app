@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run e2e cypress tests with cypress-io
-        uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v2
-        with:
-          nE2E: 3
+  cypress:
+    uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v2
+    with:
+      nE2E: 3
