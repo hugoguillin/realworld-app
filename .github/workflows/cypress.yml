@@ -33,6 +33,12 @@ jobs:
 
       - name: Create database
         run: npm run sqlz -- db:create
+        env:
+          DEV_DB_USERNAME: postgres
+          DEV_DB_PASSWORD: postgres
+          DEV_DB_NAME: db_dev
+          DEV_DB_HOSTNAME: postgresql
+          DEV_DB_DIALECT: postgres
 
       - name: Start application
         run: |
