@@ -1,4 +1,4 @@
-name: Run Cypress tests
+name: Run tests
 
 on:
   workflow_dispatch:
@@ -19,53 +19,18 @@ jobs:
       - uses: actions/checkout@v3
 
       # Paso 2: Iniciar contenedores con Docker Compose
-      - name: Init PostgreSQL
-        run: docker run --name my_postgres_container -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres
+      - name: Iniciar contenedores
+        run: docker-compose up -d
 
       # Paso 3: Esperar a que los contenedores estén listos
-      - name: Wait for PostgreSQL to be ready
+      - name: Esperar a que los contenedores estén listos
         run: |
           wget -O dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/v0.7.0/dockerize-alpine-linux-amd64-v0.7.0.tar.gz && tar -C /usr/local/bin -xzvf dockerize.tar.gz && rm dockerize.tar.gz
-          dockerize -wait tcp://localhost:5432 -timeout 1m
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Create database
-        run: npm run sqlz -- db:create
-        env:
-          DEV_DB_USERNAME: postgres
-          DEV_DB_PASSWORD: postgres
-          DEV_DB_NAME: db_dev
-          DEV_DB_HOSTNAME: localhost
-          DEV_DB_DIALECT: postgres
-
-      - name: Start application
-        run: |
-          npm run dev &
-        env:
-          PORT: 3001
-          JWT_KEY: supersecretkey
-          DEV_DB_USERNAME: postgres
-          DEV_DB_PASSWORD: postgres
-          DEV_DB_NAME: db_dev
-          DEV_DB_HOSTNAME: localhost
-          DEV_DB_DIALECT: postgres
-
-      - name: Wait on
-        uses: iFaxity/wait-on-action@v1.1.0
-        with:
-          resource: http://localhost:3001
+          dockerize -wait tcp://localhost:3000 -timeout 1m
 
       # Paso 4: Ejecutar el script de sembrado de datos
-      - name: Seed database
-        run: npm run sqlz -- db:seed:all
-        env:
-          DEV_DB_USERNAME: postgres
-          DEV_DB_PASSWORD: postgres
-          DEV_DB_NAME: db_dev
-          DEV_DB_HOSTNAME: localhost
-          DEV_DB_DIALECT: postgres
+      - name: Ejecutar script de sembrado
+        run: docker-compose exec -T app npm run sqlz -- db:seed:all
 
       - name: Register cypress user
         run: |
