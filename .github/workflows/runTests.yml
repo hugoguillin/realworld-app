@@ -26,6 +26,10 @@ jobs:
       - name: Ejecutar script de sembrado
         run: docker-compose exec -T app npm run sqlz -- db:seed:all
 
+      - name: Register cypress user
+        run: |
+          curl -X POST 'http://localhost:3000/api/users' -H 'Content-Type: application/json' -d '{"user": {"username": "cypress-user","email": "cypress@realworld.com","password": "cypress@realworld.com"}}'
+
       - name: Install dependencies
         run: npm install
 
