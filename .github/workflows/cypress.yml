@@ -42,7 +42,7 @@ jobs:
 
       - name: Start application
         run: |
-          npm run dev
+          npm run dev &
         env:
           PORT: 3001
           JWT_KEY: supersecretkey
@@ -55,7 +55,7 @@ jobs:
       - name: Wait on
         uses: iFaxity/wait-on-action@v1.1.0
         with:
-          resource: http://localhost:3000
+          resource: http://localhost:3001
 
       # Paso 4: Ejecutar el script de sembrado de datos
       - name: Seed database
