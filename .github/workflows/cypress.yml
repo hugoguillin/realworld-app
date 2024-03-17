@@ -20,7 +20,7 @@ jobs:
 
       # Paso 2: Iniciar contenedores con Docker Compose
       - name: Init PostgreSQL
-        run: docker run --name my_postgres_container -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres:latest
+        run: docker run --name my_postgres_container -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres
 
       # Paso 3: Esperar a que los contenedores estén listos
       - name: Wait for PostgreSQL to be ready
@@ -30,6 +30,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Create database
+        run: npm run sqlz -- db:create
 
       - name: Start application
         run: |
