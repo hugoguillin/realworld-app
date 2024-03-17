@@ -36,8 +36,8 @@ jobs:
         run: |
           curl -X POST 'http://localhost:3000/api/users' -H 'Content-Type: application/json' -d '{"user": {"username": "cypress-user","email": "cypress@realworld.com","password": "cypress@realworld.com"}}'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install Cypress
+        run: npm install cypress --save-dev
 
       - name: Run e2e cypress tests with cypress-io
         uses: cypress-io/github-action@v6.5.0
