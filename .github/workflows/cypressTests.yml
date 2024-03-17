@@ -43,7 +43,8 @@ jobs:
           DEV_DB_HOSTNAME: postgresql
           DEV_DB_DIALECT: postgres
 
-      - uses: iFaxity/wait-on-action
+      - name: Wait on
+        uses: iFaxity/wait-on-action@v1.1.0
         with:
           resource: http://localhost:3000
 
