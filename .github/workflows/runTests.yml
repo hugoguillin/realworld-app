@@ -34,7 +34,6 @@ jobs:
         run: npm install
 
       - name: Run e2e cypress tests with cypress-io
-        uses: cypress-io/github-action@v6.5.0
-
-  # run-cypress-tests:
-  #   uses: bahmutov/cypress-workflows/.github/workflows/standard.yml@v1
+        uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v2
+        with:
+          nE2E: 3

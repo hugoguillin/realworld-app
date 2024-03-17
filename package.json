@@ -30,6 +30,7 @@
     "concurrently": "^7.6.0",
     "cypress": "^13.6.4",
     "cypress-map": "^1.30.0",
+    "cypress-split": "^1.21.0",
     "vitest": "^0.29.7"
   }
 }
