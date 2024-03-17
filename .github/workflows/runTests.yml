@@ -9,6 +9,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    # run 3 copies of the current job in parallel
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
+
     steps:
       - uses: actions/checkout@v3
 
@@ -33,7 +39,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-  cypress:
-    uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v2
-    with:
-      nE2E: 3
+      - name: Run e2e cypress tests with cypress-io
+        uses: cypress-io/github-action@v6.5.0
+        # pass the machine index and the total number
+        env:
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}

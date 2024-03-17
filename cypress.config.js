@@ -1,4 +1,5 @@
 const { defineConfig } = require("cypress");
+const cypressSplit = require("cypress-split");
 
 module.exports = defineConfig({
   e2e: {
@@ -7,6 +8,7 @@ module.exports = defineConfig({
     experimentalRunAllSpecs: true,
     setupNodeEvents(on, config) {
       require("@cypress/grep/src/plugin")(config);
+      cypressSplit(on, config);
       return config;
     },
   },
