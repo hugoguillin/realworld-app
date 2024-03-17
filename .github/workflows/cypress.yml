@@ -37,7 +37,7 @@ jobs:
           DEV_DB_USERNAME: postgres
           DEV_DB_PASSWORD: postgres
           DEV_DB_NAME: db_dev
-          DEV_DB_HOSTNAME: postgresql
+          DEV_DB_HOSTNAME: localhost
           DEV_DB_DIALECT: postgres
 
       - name: Start application
@@ -49,7 +49,7 @@ jobs:
           DEV_DB_USERNAME: postgres
           DEV_DB_PASSWORD: postgres
           DEV_DB_NAME: db_dev
-          DEV_DB_HOSTNAME: postgresql
+          DEV_DB_HOSTNAME: localhost
           DEV_DB_DIALECT: postgres
 
       - name: Wait on
