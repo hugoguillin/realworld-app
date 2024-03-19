@@ -10,7 +10,6 @@ module.exports = defineConfig({
     reporterOptions: {
       charts: true,
       reportTitle: "Bico Cypress test report",
-      reportFilename: "cypress-test-report_[datetime]",
       embeddedScreenshots: true,
       inlineAssets: true,
     },
