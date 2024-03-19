@@ -4,11 +4,22 @@ const cypressSplit = require("cypress-split");
 module.exports = defineConfig({
   e2e: {
     baseUrl: "http://localhost:3000/#",
+    video: true,
     watchForFileChanges: false,
     experimentalRunAllSpecs: true,
+    reporter: "cypress-mochawesome-reporter",
+    reporterOptions: {
+      charts: true,
+      reportTitle: "Bico Cypress test report",
+      embeddedScreenshots: true,
+      inlineAssets: true,
+      videoOnFailOnly: true,
+    },
     setupNodeEvents(on, config) {
+      const fixedOn = require("cypress-on-fix")(on);
       require("@cypress/grep/src/plugin")(config);
-      cypressSplit(on, config);
+      cypressSplit(fixedOn, config);
+      require("cypress-mochawesome-reporter/plugin")(fixedOn);
       return config;
     },
   },

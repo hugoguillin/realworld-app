@@ -43,4 +43,7 @@ yarn-debug.log*
 yarn-error.log*
 
 #Cypress
-cypress.downloads
+cypress/downloads
+cypress/screenshots
+cypress/reports
+cypress/videos
