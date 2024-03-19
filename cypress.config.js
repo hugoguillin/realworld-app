@@ -4,16 +4,15 @@ const cypressSplit = require("cypress-split");
 module.exports = defineConfig({
   e2e: {
     baseUrl: "http://localhost:3000/#",
-    video: true,
     watchForFileChanges: false,
     experimentalRunAllSpecs: true,
     reporter: "cypress-mochawesome-reporter",
     reporterOptions: {
       charts: true,
       reportTitle: "Bico Cypress test report",
+      reportFilename: "cypress-test-report_[datetime]",
       embeddedScreenshots: true,
       inlineAssets: true,
-      videoOnFailOnly: true,
     },
     setupNodeEvents(on, config) {
       const fixedOn = require("cypress-on-fix")(on);
