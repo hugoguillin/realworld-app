@@ -19,7 +19,7 @@ export default class TagsPage {
 
   static getRandomTag() {
     return TagsApi.getPopularTags().then((tags) => {
-      return tags[Cypress._.random(0, 50)];
+      return tags[Cypress._.random(0, 10)];
     });
   }
 
