@@ -1,5 +1,4 @@
 const { defineConfig } = require("cypress");
-const cypressSplit = require("cypress-split");
 
 module.exports = defineConfig({
   e2e: {
@@ -16,8 +15,22 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       const fixedOn = require("cypress-on-fix")(on);
       require("@cypress/grep/src/plugin")(config);
-      cypressSplit(fixedOn, config);
+      require("cypress-split")(fixedOn, config);
       require("cypress-mochawesome-reporter/plugin")(fixedOn);
+
+      // Delete videos if spec passed and no retries
+      fixedOn("after:spec", (spec, results) => {
+        if (results && results.video) {
+          // Do we have failures for any retry attempts?
+          const failures = results.tests.some((test) =>
+            test.attempts.some((attempt) => attempt.state === "failed")
+          );
+          if (!failures) {
+            // delete the video if the spec passed and no tests retried
+            fs.unlinkSync(results.video);
+          }
+        }
+      });
       return config;
     },
   },
