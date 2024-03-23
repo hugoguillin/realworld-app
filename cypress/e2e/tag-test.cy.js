@@ -1,40 +1,51 @@
-import TagsApi from '../api-utils/tags-api'
-import TagsPage from '../page-objects/tags-page'
-import ArticlesApi from '../api-utils/article-api'
-import GlobalFeedPage from '../page-objects/global-feed-page'
+import TagsApi from "../api-utils/tags-api";
+import TagsPage from "../page-objects/tags-page";
+import ArticlesApi from "../api-utils/article-api";
+import GlobalFeedPage from "../page-objects/global-feed-page";
+import Utils from "../utils/utils";
+import { fr } from "@faker-js/faker";
 
-describe('Checking the tags', () => {
+describe("Checking the tags", { tags: "@sanity" }, () => {
   before(() => {
-    cy.setJwtTokenAsEnv(Cypress.env('email'), Cypress.env('password'))
-  })
+    cy.setJwtTokenAsEnv(Cypress.env("email"), Cypress.env("password"));
+  });
   beforeEach(() => {
-    cy.loginWithSession(Cypress.env('email'), Cypress.env('password'))
-    cy.visit('/')
-  })
+    cy.loginWithSession(Cypress.env("email"), Cypress.env("password"));
+    cy.visit("/");
+  });
 
-  it('Check that all popular tags are displayed', () => {
-    let front = []
-    TagsPage.getPopularTags().then(tags => {
-      front = tags.map(tag => tag.toString().trim())
-    })
-    TagsApi.getPopularTags().should(tagsBack => {
-      expect(front).to.deep.members(tagsBack)
-    })
-  })
+  context("Check popular tags", () => {
+    before(() => {
+      for (let i = 0; i < 10; i++) {
+        let newArticle = Utils.generateNewArticleData();
+        ArticlesApi.createNewArticle(newArticle);
+      }
+    });
 
-  it('Filter articles by tag', () => {
-    cy.intercept('GET', '**/articles?tag=*').as('getArticlesByTag')
-    TagsPage.getRandomTag().then(tagName => {
-      TagsPage.filterByTag(tagName)
-      TagsPage.getTagTab().should('contain.text', tagName)
-      cy.wait('@getArticlesByTag')
-      GlobalFeedPage.getArticlesTitles().then(titles => {
-        ArticlesApi.getArticlesByTag(tagName).then(articles => {
-          expect(titles, 'Articles titles front').to.deep.members(
-            articles.map(article => article.title)
-          )
-        })
-      })
-    })
-  })
-})
+    it("Check that all popular tags are displayed", () => {
+      let front = [];
+      TagsPage.getPopularTags().then((tags) => {
+        front = tags.map((tag) => tag.toString().trim());
+      });
+      TagsApi.getPopularTags().should((tagsBack) => {
+        expect(tagsBack).to.contain.members(front);
+      });
+    });
+
+    it("Filter articles by tag", () => {
+      cy.intercept("GET", "**/articles?tag=*").as("getArticlesByTag");
+      TagsPage.getRandomTag().then((tagName) => {
+        TagsPage.filterByTag(tagName);
+        TagsPage.getTagTab().should("contain.text", tagName);
+        cy.wait("@getArticlesByTag");
+        GlobalFeedPage.getArticlesTitles().then((titles) => {
+          ArticlesApi.getArticlesByTag(tagName).then((articles) => {
+            expect(titles, "Articles titles front").to.deep.members(
+              articles.map((article) => article.title)
+            );
+          });
+        });
+      });
+    });
+  });
+});
