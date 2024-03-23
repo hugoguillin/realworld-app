@@ -1,4 +1,4 @@
-import AuthorDetailPage from "../page-objects/author-detail-page.cy";
+import AuthorDetailPage from "../page-objects/author-detail-page";
 import ArticlesApi from "../api-utils/article-api";
 import FollowAuthorButton from "../components/follow-author-button";
 
