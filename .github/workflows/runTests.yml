@@ -6,29 +6,22 @@ on:
 jobs:
   test:
     name: Spin up application to run tests
-    
+
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    # Paso 2: Dar permiso de ejecución al archivo entrypoint.sh
-    - name: Dar permiso de ejecución al archivo entrypoint.sh
-      run: chmod +x entrypoint.sh
+      - name: Init app containers
+        run: docker-compose up -d
 
-    # Paso 2: Iniciar contenedores con Docker Compose
-    - name: Iniciar contenedores
-      run: docker-compose up -d
+      - name: Wait for containers to be ready
+        run: |
+          wget -O dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/v0.7.0/dockerize-alpine-linux-amd64-v0.7.0.tar.gz && tar -C /usr/local/bin -xzvf dockerize.tar.gz && rm dockerize.tar.gz
+          dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
 
-#    # Paso 3: Esperar a que los contenedores estén listos
-    - name: Esperar a que los contenedores estén listos
-      run: |
-        wget -O dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/v0.7.0/dockerize-alpine-linux-amd64-v0.7.0.tar.gz && tar -C /usr/local/bin -xzvf dockerize.tar.gz && rm dockerize.tar.gz
-        dockerize -wait tcp://localhost:5432 -wait tcp://localhost:3000 -timeout 1m
-#
-#    # Paso 4: Ejecutar el script de sembrado de datos
-    - name: Ejecutar script de sembrado
-      run: docker-compose exec -T app npm run sqlz -- db:seed:all
+      - name: Seed database
+        run: docker-compose exec -T app npm run sqlz -- db:seed:all
 
-    - name: Run Tests
-      run: docker-compose exec -T app npm test
+      - name: Run Tests
+        run: docker-compose exec -T app npm test
