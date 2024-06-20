@@ -2,6 +2,8 @@ require("dotenv").config();
 const env = process.env.NODE_ENV || "development";
 const PORT = process.env.PORT || 3001;
 const express = require("express");
+const fs = require('fs');
+const https = require('https');
 const cors = require("cors");
 const { sequelize } = require("./models");
 const errorHandler = require("./middleware/errorHandler");
@@ -40,6 +42,19 @@ app.get("*", (req, res) =>
 );
 app.use(errorHandler);
 
-app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`),
-);
+// app.listen(PORT, () =>
+//   console.log(`Server running on http://localhost:${PORT}`),
+// );
+// Read the key and certificate
+const privateKey = fs.readFileSync('../localhost.key', 'utf8');
+const certificate = fs.readFileSync('../localhost.crt', 'utf8');
+
+const credentials = { key: privateKey, cert: certificate };
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+// Create an HTTPS server
+const httpsServer = https.createServer(credentials, app);
+// Listen on port 443 or another port designated for HTTPS
+httpsServer.listen(PORT, () => {
+  console.log('HTTPS Server running on port 3001');
+});

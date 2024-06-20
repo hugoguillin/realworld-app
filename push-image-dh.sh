@@ -11,13 +11,13 @@ if [ -z "$DOCKER_HUB_USERNAME" ] || [ -z "$DOCKER_HUB_PASSWORD" ]; then
 fi
 
 # Compila la imagen
-docker build -t realworldapp-for-test-automation:latest .
+docker build -t realworldapp-for-test-automation:https .
 
 # Etiqueta la imagen con el nombre de usuario de Docker Hub
-docker tag realworldapp-for-test-automation:latest $DOCKER_HUB_USERNAME/realworldapp-for-test-automation:latest
+docker tag realworldapp-for-test-automation:https $DOCKER_HUB_USERNAME/realworldapp-for-test-automation:https
 
 # Inicia sesión en Docker Hub
 docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
 
 # Sube la imagen a Docker Hub
-docker push $DOCKER_HUB_USERNAME/realworldapp-for-test-automation:latest
+docker push $DOCKER_HUB_USERNAME/realworldapp-for-test-automation:https
