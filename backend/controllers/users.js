@@ -36,7 +36,6 @@ const signUp = async (req, res, next) => {
     next(error);
   }
 };
-
 // Login
 const signIn = async (req, res, next) => {
   try {
@@ -55,6 +54,16 @@ const signIn = async (req, res, next) => {
       return res.status(422).json({
         errors: {
           body: ["Password is required"]
+        }
+      });
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(user.email)) {
+      return res.status(422).json({
+        errors: {
+          body: ["Invalid email format"]
         }
       });
     }
