@@ -28,10 +28,8 @@ As described in the original project, you can run the development server like th
 4. Create the database. You can run the following command from the root directory of the project:
 
    ```bash
-   npm run sqlz -- db:create
+   npm run sqlz -- db:create --env=development
    ```
 5. Start the development server with `npm run dev`.
 6. Open a web browser and navigate to [`http://localhost:3000/`](http://localhost:3000).
 7. Optionally, you can populate the database with `npm run sqlz -- db:seed:all`.
-
-
