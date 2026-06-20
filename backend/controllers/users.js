@@ -36,11 +36,37 @@ const signUp = async (req, res, next) => {
     next(error);
   }
 };
-
 // Login
 const signIn = async (req, res, next) => {
   try {
     const { user } = req.body;
+    // Check if user object and email exist
+    if (!user || !user.email) {
+      return res.status(422).json({
+        errors: {
+          body: ["Email is required"]
+        }
+      });
+    }
+
+    // Check if password exists
+    if (!user.password) {
+      return res.status(422).json({
+        errors: {
+          body: ["Password is required"]
+        }
+      });
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(user.email)) {
+      return res.status(422).json({
+        errors: {
+          body: ["Invalid email format"]
+        }
+      });
+    }
 
     const existentUser = await User.findOne({ where: { email: user.email } });
     if (!existentUser) throw new NotFoundError("Email", "sign in first");
